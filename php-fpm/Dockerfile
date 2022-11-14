@@ -1197,9 +1197,10 @@ RUN set -xe; \
 ###########################################################################
 
 ARG DOWNGRADE_OPENSSL_TLS_AND_SECLEVEL=false
+ARG DOWNGRADE_OPENSSL_TLS_VERSION=1.2
 
 RUN if [ ${DOWNGRADE_OPENSSL_TLS_AND_SECLEVEL} = true ]; then \
-    sed -i 's,^\(MinProtocol[ ]*=\).*,\1'TLSv1.2',g' /etc/ssl/openssl.cnf \
+    sed -i 's,^\(MinProtocol[ ]*=\).*,\1'TLSv${DOWNGRADE_OPENSSL_TLS_VERSION}',g' /etc/ssl/openssl.cnf \
     && \
     sed -i 's,^\(CipherString[ ]*=\).*,\1'DEFAULT@SECLEVEL=1',g' /etc/ssl/openssl.cnf\
 ;fi
